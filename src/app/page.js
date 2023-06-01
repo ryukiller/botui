@@ -22,9 +22,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray-100">
+    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray-100 dark:bg-slate-900">
       <div className="container mx-auto p-6">
-        <div className="bg-white shadow-md rounded-md p-6">
+        <div className="bg-white dark:bg-slate-700 shadow-md rounded-md p-6">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold">Uniswap Pool View</h1>
             <button
@@ -37,7 +37,10 @@ export default function Home() {
           {data ? (
             <div className="grid grid-cols-2 gap-6">
               {Object.entries(data).map(([key, value]) => (
-                <div className="bg-white shadow-md rounded p-4" key={key}>
+                <div
+                  className="bg-white dark:bg-slate-600 shadow-md rounded p-4"
+                  key={key}
+                >
                   <h2 className="text-lg font-bold mb-2">{key}</h2>
                   <p className="text-gray-600">{value}</p>
                 </div>
