@@ -22,9 +22,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-gray-100 dark:bg-slate-900">
-      <div className="mx-auto p-6">
-        <div className="dark:bg-slate-700 bg-slate-600 shadow-md rounded-md p-6">
+    <main className="flex min-h-screen flex-col items-center justify-between p-0 lg:p-24 bg-gray-100 dark:bg-slate-900">
+      <div className="mx-auto p-0 lg:p-6">
+        <div className="dark:bg-slate-700 bg-slate-600 shadow-md rounded-md p-6 w-screen lg:w-auto">
           <div className="flex items-center justify-between mb-6">
             <button
               className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-4 px-4 rounded-full"
@@ -47,8 +47,8 @@ export default function Home() {
             </button>
           </div>
           {data ? (
-            <div className="m-6">
-              <div className="flex flex-row justify-between items-center m-auto mt-10 mb-10">
+            <div className="m-4 lg:m-6">
+              <div className="flex flex-col lg:flex-row justify-between items-center m-auto mt-10 mb-10">
                 <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
                   <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                     lower
@@ -62,7 +62,7 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-8 h-8 m-6 text-emerald-400"
+                    className="w-8 h-8 m-6 text-emerald-400 rotate-90 lg:rotate-0"
                   >
                     <path
                       strokeLinecap="round"
@@ -84,7 +84,7 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="w-8 h-8 m-6 text-emerald-400"
+                    className="w-8 h-8 m-6 text-emerald-400 rotate-90 lg:rotate-0"
                   >
                     <path
                       strokeLinecap="round"
