@@ -3,19 +3,29 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [data, setData] = useState();
-
+  ("use server");
   const fetchData = async () => {
-    const res = await fetch("/api/update");
-    const data = await res.json();
-    setData(data);
+    try {
+      const res = await fetch("/api/update", {
+        method: "POST",
+        next: { revalidate: 0 },
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      setData(data);
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const handleRefresh = () => {
-    fetchData();
+  const handleRefresh = async () => {
+    await fetchData();
   };
 
   return (

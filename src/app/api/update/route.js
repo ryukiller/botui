@@ -1,3 +1,4 @@
+"use server";
 import { NextResponse } from "next/server";
 // const dotenv = require("dotenv");
 // dotenv.config();
@@ -85,7 +86,7 @@ function tickToUSDC(tick) {
   return tickPrice.toFixed(2);
 }
 
-export async function GET(req) {
+export async function POST(req) {
   const nftID = await getLastPositionId(botAddr);
   const currentTick = await getCurrentTick();
   const currentTickUSD = tickToUSDC(currentTick);
@@ -98,8 +99,10 @@ export async function GET(req) {
     parseFloat(wethFees * currentTickUSD) + parseFloat(usdcFees);
 
   const poolInfo = await getPosInfo(nftID);
+  const date = new Date();
 
   const data = {
+    date: date,
     lastPosId: nftID.toString(),
     currentTick: currentTick,
     currentTickUSD: currentTickUSD,
