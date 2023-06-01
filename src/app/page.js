@@ -5,19 +5,12 @@ export default function Home() {
   const [data, setData] = useState();
 
   const fetchData = async () => {
-    try {
-      const res = await fetch("/api/update", {
-        method: "POST",
-        next: { revalidate: 0 },
-      });
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      const data = await res.json();
-      setData(data);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
+    const res = await fetch("/api/update", {
+      method: "POST",
+      next: { revalidate: 0 },
+    });
+    const data = await res.json();
+    setData(data);
   };
 
   useEffect(() => {
