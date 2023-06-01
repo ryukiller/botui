@@ -45,8 +45,8 @@ async function getLastPositionId(address) {
 
 async function getCurrentTick() {
   // get the current tick and return it
-  const { tick } = await poolContract.slot0();
-  return tick;
+  const { tick, sqrtPriceX96 } = await poolContract.slot0();
+  return { tick: tick, sqrtPriceX96: sqrtPriceX96 };
 }
 
 const calculatePendingFees = async (tokenId) => {
@@ -86,9 +86,51 @@ function tickToUSDC(tick) {
   return tickPrice.toFixed(2);
 }
 
+const Q96 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(96));
+
+async function getTokenAmounts(
+  liquidity,
+  sqrtPriceX96,
+  tickLow,
+  tickHigh,
+  Decimal0,
+  Decimal1,
+  currentTick
+) {
+  let sqrtRatioA = Math.sqrt(Math.pow(1.0001, tickLow));
+  let sqrtRatioB = Math.sqrt(Math.pow(1.0001, tickHigh));
+
+  let sqrtPrice =
+    parseFloat(sqrtPriceX96.toString()) / parseFloat(Q96.toString());
+
+  let amount0wei = 0;
+  let amount1wei = 0;
+  if (currentTick <= tickLow) {
+    amount0wei = Math.floor(
+      liquidity * ((sqrtRatioB - sqrtRatioA) / (sqrtRatioA * sqrtRatioB))
+    );
+  } else if (currentTick > tickHigh) {
+    amount1wei = Math.floor(liquidity * (sqrtRatioB - sqrtRatioA));
+  } else if (currentTick >= tickLow && currentTick < tickHigh) {
+    amount0wei = Math.floor(
+      liquidity * ((sqrtRatioB - sqrtPrice) / (sqrtPrice * sqrtRatioB))
+    );
+    amount1wei = Math.floor(liquidity * (sqrtPrice - sqrtRatioA));
+  }
+
+  let amount0Human = Math.abs(amount0wei / Math.pow(10, Decimal0)).toFixed(
+    Decimal0
+  );
+  let amount1Human = Math.abs(amount1wei / Math.pow(10, Decimal1)).toFixed(
+    Decimal1
+  );
+
+  return { amount0Human: amount0Human, amount1Human: amount1Human };
+}
+
 export async function POST(req) {
   const nftID = await getLastPositionId(botAddr);
-  const currentTick = await getCurrentTick();
+  const { tick: currentTick, sqrtPriceX96 } = await getCurrentTick();
   const currentTickUSD = tickToUSDC(currentTick);
   const fees = await calculatePendingFees(nftID);
   //console.log(fees);
@@ -100,6 +142,17 @@ export async function POST(req) {
 
   const poolInfo = await getPosInfo(nftID);
   const date = new Date();
+
+  const { amount0Human: usdcPool, amount1Human: wethPool } =
+    await getTokenAmounts(
+      poolInfo.liquidity,
+      sqrtPriceX96,
+      poolInfo.tickLower,
+      poolInfo.tickUpper,
+      6,
+      18,
+      currentTick
+    );
 
   const data = {
     date: date,
@@ -115,6 +168,9 @@ export async function POST(req) {
     liquidity: poolInfo.liquidity.toString(),
     tickLowerUSD: tickToUSDC(poolInfo.tickLower),
     tickUpperUSD: tickToUSDC(poolInfo.tickUpper),
+    usdcPool: parseFloat(usdcPool).toFixed(2),
+    wethPool: parseFloat(wethPool).toFixed(5),
+    wethPoolToUSDC: parseFloat(wethPool * currentTickUSD).toFixed(2),
   };
   return NextResponse.json(data);
 }
