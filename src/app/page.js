@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function Home() {
   const [data, setData] = useState();
-  ("use server");
+
   const fetchData = async () => {
     try {
       const res = await fetch("/api/update", {
