@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
 
 function formatDateTime(date) {
   const d = new Date(date);
@@ -39,7 +40,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-0 lg:p-24 bg-gray-100 dark:bg-slate-900">
       <div className="mx-auto p-0 lg:p-6">
         <div className="bg-slate-600 shadow-md rounded-md p-6 w-screen lg:w-auto">
-          <div className="flex items-center justify-start mb-6">
+          <div className="flex items-center justify-evenly mb-6 w-full">
             <button
               className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-4 px-4 rounded-full"
               onClick={handleRefresh}
@@ -60,27 +61,35 @@ export default function Home() {
               </svg>
             </button>
             {data && (
+              <div className="flex flex-row justify-between items-center w-fulls">
               <span className="text-slate-600 text-xs font-bold p-2 ml-4 rounded-md bg-emerald-100">
                 {formatDateTime(data.date)}
               </span>
+              <span className="ml-6 p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+              <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
+                liquidity
+              </span>
+              ${data.totalLiquidity}
+            </span>
+            </div>
             )}
           </div>
           {data ? (
             <div className="m-4 lg:m-6">
               <div className="flex flex-row justify-between items-center my-10 border-b-2 pb-5">
-                <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+                <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                   <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                     Pooled USDC
                   </span>
                   ${data.usdcPool}
                 </span>
-                <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+                <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                   <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                     Pooled WETH
                   </span>
                   {data.wethPool}
                 </span>
-                <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+                <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                   <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                     WETH in USDC
                   </span>
@@ -139,23 +148,23 @@ export default function Home() {
                   ${data.tickLowerUSD}
                 </span>
               </div>
-              <div className="m-auto mb-10 mt-18">
-                <h3 className="text-white mb-12">Rewards</h3>
-                <div className="flex flex-row justify-between items-center">
-                  <div className="flex flex-col justify-between min-h-[220px]">
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+              <div className="m-auto mb-2">
+                <h3 className="text-white mb-5">Rewards</h3>
+                <div className="flex flex-col justify-between items-center">
+                  <div className="flex flex-row justify-between w-full mb-8">
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                       <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                         usd
                       </span>
                       ${data.usdcFees}
                     </span>
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                       <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                         weth
                       </span>
                       {parseFloat(data.wethFees).toFixed(5)}
                     </span>
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-lg rounded-lg relative">
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                       <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                         weth in usd
                       </span>

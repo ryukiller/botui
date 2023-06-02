@@ -1,10 +1,16 @@
 "use server";
+
+import { BigNumber, ethers } from "ethers";
+import { FullMath, TickMath } from "@uniswap/v3-sdk";
+
+import JSBI from "jsbi";
 import { NextResponse } from "next/server";
+
 // const dotenv = require("dotenv");
 // dotenv.config();
-import JSBI from "jsbi";
-import { TickMath, FullMath } from "@uniswap/v3-sdk";
-import { ethers, BigNumber } from "ethers";
+
+
+
 const {
   abi: IUniswapV3PoolABI,
 } = require("@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json");
@@ -153,6 +159,8 @@ export async function POST(req) {
       18,
       currentTick
     );
+    const wethPoolToUSDC = parseFloat(wethPool * currentTickUSD).toFixed(2)
+    const totalLiquidity = parseFloat(usdcPool) + parseFloat(wethPoolToUSDC)
 
   const data = {
     date: date,
@@ -170,7 +178,8 @@ export async function POST(req) {
     tickUpperUSD: tickToUSDC(poolInfo.tickUpper),
     usdcPool: parseFloat(usdcPool).toFixed(2),
     wethPool: parseFloat(wethPool).toFixed(5),
-    wethPoolToUSDC: parseFloat(wethPool * currentTickUSD).toFixed(2),
+    wethPoolToUSDC: wethPoolToUSDC,
+    totalLiquidity: totalLiquidity.toFixed(2),
   };
   return NextResponse.json(data);
 }
