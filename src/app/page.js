@@ -39,8 +39,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-0 lg:p-24 bg-slate-600 dark:bg-slate-600">
       <div className="mx-auto p-0 lg:p-6 flex flex-col justify-center items-center">
-        <div className="bg-slate-600 rounded-md p-6 w-screen lg:w-auto">
-          <div className="flex items-center justify-evenly mb-6 w-full">
+        <div className="bg-slate-600 rounded-md px-6 w-screen lg:w-auto">
+          <div className="flex items-center justify-evenly w-full">
             <button
               className="bg-slate-900 hover:bg-slate-500 text-white font-bold py-4 px-4 rounded-full"
               onClick={handleRefresh}
@@ -96,7 +96,7 @@ export default function Home() {
                   ${data.wethPoolToUSDC}
                 </span>
               </div>
-              <div className="flex flex-row lg:flex-row justify-between items-center m-auto mt-10 mb-10 border-b-2 pb-5">
+              <div className="flex flex-row lg:flex-row justify-between items-center m-auto mt-10 mb-5 border-b-2 pb-5">
                 <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                   <span className="absolute text-[8px] leading-3 text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                     lower
@@ -151,7 +151,7 @@ export default function Home() {
               <div className="m-auto mb-2">
                 <h3 className="text-white mb-5">Rewards</h3>
                 <div className="flex flex-col justify-between items-center">
-                  <div className="flex flex-row justify-between w-full mb-8">
+                  <div className="border-b-2 pb-5 flex flex-row justify-between w-full mb-8">
                     <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
                       <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
                         usd
