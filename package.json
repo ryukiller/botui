@@ -18,6 +18,7 @@
     "eslint-config-next": "13.4.4",
     "ethers": "^5.7.2",
     "jsbi": "^4.3.0",
+    "mongoose": "^7.3.4",
     "next": "13.4.4",
     "next-pwa": "^5.6.0",
     "postcss": "8.4.24",
