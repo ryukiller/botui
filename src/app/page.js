@@ -32,6 +32,7 @@ export default function Home() {
       next: { revalidate: 0 },
     });
     const data2 = await res2.json();
+    console.log(data2)
 
     setRecords(data2);
     setData(data);
@@ -39,6 +40,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
+    console.log(records)
   }, []);
 
   const handleRefresh = async () => {
@@ -188,35 +190,47 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-              <div>
-                {records && records.map((record, index) => {
-                  <div key={index}>
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
-                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
-                        USDC
-                      </span>
-                      ${record.usdc_amount}
+              <div className="flex flex-col justify-between items-center mt-10 max-h-32 overflow-auto">
+                {
+                  records &&
+                  <span className="text-slate-600 text-[16px] font-bold rounded-md bg-emerald-100 p-2 my-2">
+                    Totale rewards - ${records.reduce((total, record) => total + parseFloat(record.total_fees), 0)}
+                  </span>
+                }
+
+                {records && [...records].reverse().map((record, index) => (
+                  <div className="border-b-2 py-1 flex flex-col items-start justify-between w-full mb-2" key={index}>
+                    <span className="text-slate-600 text-[8px] font-bold p-1 rounded-md bg-emerald-100">
+                      {formatDateTime(record.timestamp)}
                     </span>
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
-                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
-                        WETH
+                    <div className="pl-5 pt-5 pb-2 flex flex-row items-center justify-between w-full">
+                      <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
+                        <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
+                          USDC
+                        </span>
+                        ${record.usdc_amount}
                       </span>
-                      {record.weth_amount}
-                    </span>
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
-                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
-                        $WETH
+                      <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
+                        <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
+                          WETH
+                        </span>
+                        {record.weth_amount}
                       </span>
-                      ${record.weth_in_usdc}
-                    </span>
-                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
-                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
-                        total
+                      <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
+                        <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
+                          $WETH
+                        </span>
+                        ${record.weth_in_usdc}
                       </span>
-                      ${record.total_feed}
-                    </span>
+                      <span className="p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
+                        <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
+                          total
+                        </span>
+                        ${record.total_fees}
+                      </span>
+                    </div>
                   </div>
-                })}
+                ))}
               </div>
             </div>
           ) : (
