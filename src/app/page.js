@@ -18,6 +18,7 @@ function formatDateTime(date) {
 
 export default function Home() {
   const [data, setData] = useState();
+  const [records, setRecords] = useState();
 
   const fetchData = async () => {
     const res = await fetch("/api/update", {
@@ -25,6 +26,14 @@ export default function Home() {
       next: { revalidate: 0 },
     });
     const data = await res.json();
+
+    const res2 = await fetch("/api/records", {
+      method: "GET",
+      next: { revalidate: 0 },
+    });
+    const data2 = await res2.json();
+
+    setRecords(data2);
     setData(data);
   };
 
@@ -62,16 +71,16 @@ export default function Home() {
             </button>
             {data && (
               <div className="flex flex-row justify-between items-center w-full">
-              <span className="text-slate-600 text-[8px] font-bold p-2 ml-4 rounded-md bg-emerald-100">
-                {formatDateTime(data.date)}
-              </span>
-              <span className="ml-6 p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
-              <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
-                liquidity
-              </span>
-              ${data.totalLiquidity}
-            </span>
-            </div>
+                <span className="text-slate-600 text-[8px] font-bold p-2 ml-4 rounded-md bg-emerald-100">
+                  {formatDateTime(data.date)}
+                </span>
+                <span className="ml-6 p-2 bg-slate-700 text-green-400 font-bold text-sm rounded-lg relative">
+                  <span className="absolute text-[8px] leading-3 lett text-white bg-slate-800 rounded-lg top-[-15px] left-[-20px] p-1 px-2">
+                    liquidity
+                  </span>
+                  ${data.totalLiquidity}
+                </span>
+              </div>
             )}
           </div>
           {data ? (
@@ -178,6 +187,16 @@ export default function Home() {
                     ${data.totalFees}
                   </span>
                 </div>
+              </div>
+              <div>
+                {records && records.map((record, index) => {
+                  <div key={index}>
+                    {record.usdc_amount}
+                    {record.weth_amount}
+                    {record.weth_in_usdc}
+                    {record.total_feed}
+                  </div>
+                })}
               </div>
             </div>
           ) : (
