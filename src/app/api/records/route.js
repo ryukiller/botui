@@ -63,7 +63,7 @@ export async function GET(req) {
             .select("-__v")
             .exec();
 
-        return NextResponse.json({ rewards })
+        return NextResponse.json(rewards)
     } catch (error) {
         console.error("Error saving Rewards: ", error);
         return NextResponse.json({ message: "Error getting Rewards " })

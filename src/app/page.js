@@ -18,7 +18,7 @@ function formatDateTime(date) {
 
 export default function Home() {
   const [data, setData] = useState();
-  const [records, setRecords] = useState();
+  const [records, setRecords] = useState([]);
 
   const fetchData = async () => {
     const res = await fetch("/api/update", {
@@ -191,10 +191,30 @@ export default function Home() {
               <div>
                 {records && records.map((record, index) => {
                   <div key={index}>
-                    {record.usdc_amount}
-                    {record.weth_amount}
-                    {record.weth_in_usdc}
-                    {record.total_feed}
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
+                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
+                        USDC
+                      </span>
+                      ${record.usdc_amount}
+                    </span>
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
+                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
+                        WETH
+                      </span>
+                      {record.weth_amount}
+                    </span>
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
+                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
+                        $WETH
+                      </span>
+                      ${record.weth_in_usdc}
+                    </span>
+                    <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
+                      <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
+                        total
+                      </span>
+                      ${record.total_feed}
+                    </span>
                   </div>
                 })}
               </div>
