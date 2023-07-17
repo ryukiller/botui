@@ -17,6 +17,7 @@ const rewardsSchema = new Schema(
         usdc_amount: { type: String, required: true },
         weth_amount: { type: String, required: true },
         weth_in_usdc: { type: String, required: true },
+        total_fees: { type: String, required: true },
         timestamp: { type: String, required: true },
     },
     { collection: "rewards" }
@@ -32,7 +33,7 @@ export async function POST(req) {
 
 
     try {
-        const { usdc_amount, weth_amount, weth_in_usdc } = body;
+        const { usdc_amount, weth_amount, weth_in_usdc, total_fees } = body;
 
         const timestamp = new Date();
 
@@ -40,6 +41,7 @@ export async function POST(req) {
             usdc_amount: usdc_amount,
             weth_amount: weth_amount,
             weth_in_usdc: weth_in_usdc,
+            total_fees: total_fees,
             timestamp: timestamp,
         });
 
