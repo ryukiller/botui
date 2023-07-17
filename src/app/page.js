@@ -182,7 +182,7 @@ export default function Home() {
                       ${data.wethinusdfees}
                     </span>
                   </div>
-                  <span className="p-2 bg-slate-700 text-green-400 font-bold text-4xl rounded-lg relative">
+                  <span className="p-2 bg-slate-700 text-green-400 font-bold text-2xl rounded-lg relative">
                     <span className="absolute text-sm leading-3 lett text-white bg-slate-800 rounded-lg top-[-18px] left-[-20px] p-2 px-3">
                       total
                     </span>
@@ -190,10 +190,10 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col justify-between items-center mt-10 max-h-32 overflow-auto">
+              <div className="flex flex-col justify-between items-center mt-4 max-h-32 overflow-auto">
                 {
                   records &&
-                  <span className="text-slate-600 text-[16px] font-bold rounded-md bg-emerald-100 p-2 my-2">
+                  <span className="text-slate-600 text-[12px] font-bold rounded-md bg-emerald-100 p-1 my-2">
                     Totale rewards - ${records.reduce((total, record) => total + parseFloat(record.total_fees), 0)}
                   </span>
                 }
