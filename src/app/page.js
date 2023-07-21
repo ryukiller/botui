@@ -190,7 +190,7 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col justify-between items-center mt-4 max-h-32 overflow-auto">
+              {/* <div className="flex flex-col justify-between items-center mt-4 max-h-32 overflow-auto">
                 {
                   records &&
                   <span className="text-slate-600 text-[12px] font-bold rounded-md bg-emerald-100 p-1 my-2">
@@ -231,7 +231,7 @@ export default function Home() {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           ) : (
             <p>Loading...</p>
