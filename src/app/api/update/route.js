@@ -21,7 +21,7 @@ const NftPosAbi = require("../../../abi/NftPositionsAbi.json");
 
 const RPC_URL = process.env.ALCHEMY;
 
-const botAddr = "0xf9579E3ce6D77a23Aa1020Bf495ed04A40a9080f";
+const botAddr = "0x71edc98eef1555d577ae0ed1e6605999e459ae2a";
 
 const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
@@ -159,8 +159,8 @@ export async function POST(req) {
       18,
       currentTick
     );
-    const wethPoolToUSDC = parseFloat(wethPool * currentTickUSD).toFixed(2)
-    const totalLiquidity = parseFloat(usdcPool) + parseFloat(wethPoolToUSDC)
+  const wethPoolToUSDC = parseFloat(wethPool * currentTickUSD).toFixed(2)
+  const totalLiquidity = parseFloat(usdcPool) + parseFloat(wethPoolToUSDC)
 
   const data = {
     date: date,
